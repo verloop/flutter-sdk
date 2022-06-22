@@ -1,0 +1,29 @@
+PODS:
+  - Flutter (1.0.0)
+  - verloop_flutter_sdk (0.0.1):
+    - Flutter
+    - VerloopSDKiOS
+  - VerloopSDKiOS (0.1.6)
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - verloop_flutter_sdk (from `.symlinks/plugins/verloop_flutter_sdk/ios`)
+
+SPEC REPOS:
+  trunk:
+    - VerloopSDKiOS
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  verloop_flutter_sdk:
+    :path: ".symlinks/plugins/verloop_flutter_sdk/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+  verloop_flutter_sdk: 486dd40fcaad7ebd6f3f0226ef4b5457a6a6e427
+  VerloopSDKiOS: 6b805e3a18ef640391538da6e0a63565827977f8
+
+PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
+
+COCOAPODS: 1.11.3
