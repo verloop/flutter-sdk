@@ -1,6 +1,6 @@
 import Flutter
 import UIKit
-import VerloopSDK
+import VerloopSDKiOS
 
 public class SwiftVerloopFlutterSdkPlugin: NSObject, FlutterPlugin {
 
@@ -8,13 +8,16 @@ public class SwiftVerloopFlutterSdkPlugin: NSObject, FlutterPlugin {
   private static var buttonClickChannel = "verloop.flutter.dev/events/button-click'"
   private static var urlClickChannel = "verloop.flutter.dev/events/url-click'"
 
+  private static var buttonHandler: ButtonClickHandler?
+  private static var urlHandler: UrlClickHandler?
+
 
   private static var ERROR_101 = "101" // verloop object not built
   private static var ERROR_102 = "102" // client id not defined
 
-  private var verloop: VerloopSDK? = null
-  private var clientId: String? = null
-  private var config: VLConfig? = null
+  private var verloop: VerloopSDK?
+  private var clientId: String?
+  private var config: VLConfig?
 
   public static func register(with registrar: FlutterPluginRegistrar) {
 
@@ -24,9 +27,9 @@ public class SwiftVerloopFlutterSdkPlugin: NSObject, FlutterPlugin {
 
     let instance = SwiftVerloopFlutterSdkPlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)
-    let buttonHandler = ButtonClickHandler()
+    buttonHandler = ButtonClickHandler()
     buttonChannel.setStreamHandler(buttonHandler)
-    let urlHandler = UrlClickHandler()
+    urlHandler = UrlClickHandler()
     urlChannel.setStreamHandler(urlHandler)
   }
 
@@ -35,54 +38,60 @@ public class SwiftVerloopFlutterSdkPlugin: NSObject, FlutterPlugin {
         case "setConfig":
             if let args = call.arguments as? Dictionary<String, Any> {
                 var clientId = args["CLIENT_ID"] as? String
-                config = VLConfig(clientId)
+                if clientId == nil || clientId == "" {
+                    result(FlutterError.init(code: SwiftVerloopFlutterSdkPlugin.ERROR_102,
+                                                         message: "CLIENT_ID missing",
+                                                         details: nil))
+                    return
+                }
+                config = VLConfig(clientId: clientId!)
 
                 var userId = args["USER_ID"] as? String
                 if userId != nil && userId != "" {
-                    config.setUserId(userId)
+                    config?.setUserId(userId: userId!)
                 }
 
                 var fcmToken = args["FCM_TOKEN"] as? String
-                if fcmToken != null && fcmToken != "" {
-                    config.setFcmToken(fcmToken)               // If you wish to get notifications, else, skip this
+                if fcmToken != nil && fcmToken != "" {
+                    config?.setNotificationToken(notificationToken: fcmToken!)               // If you wish to get notifications, else, skip this
                 }
 
                 var recipeId = args["RECIPE_ID"] as? String
-                if recipeId != null && recipeId != "" {
-                    config.setRecipeId(recipeId)               // In case you want to use default recipe, skip this
+                if recipeId != nil && recipeId != "" {
+                    config?.setRecipeId(recipeId: recipeId!)               // In case you want to use default recipe, skip this
                 }
 
                 var userName = args["USER_NAME"] as? String
-                if userName != null && userName != "" {
-                    config.setUserName(userName)               // If guest name variable is a part of the recipe, or the value is not required, skip this
+                if userName != nil && userName != "" {
+                    config?.setUserName(userName: userName!)               // If guest name variable is a part of the recipe, or the value is not required, skip this
                 }
 
                 var userEmail = args["USER_EMAIL"] as? String
-                if userEmail != null && userEmail != "" {
-                    config.setUserEmail(userEmail)               // If email variable is a part of the recipe, or the value is not required, skip this
+                if userEmail != nil && userEmail != "" {
+                    config?.setUserEmail(userEmail: userEmail!)               // If email variable is a part of the recipe, or the value is not required, skip this
                 }
 
                 var userPhone = args["USER_PHONE"] as? String
-                if userPhone != null && userPhone != "" {
-                    config.setUserPhone(userPhone)               // If phone variable is a part of the recipe, or the value is not required, skip this
+                if userPhone != nil && userPhone != "" {
+                    config?.setUserPhone(userPhone: userPhone!)               // If phone variable is a part of the recipe, or the value is not required, skip this
                 }
 
                 var isStaging = args["IS_STAGING"] as? Bool
-                if isStaging != null {
-                    config.setIsStaging(isStaging)               // Keep this as true if you want to access <client_id>.stage.verloop.io account. If the account doesn't exist, keep it as false or skip it
+                if isStaging != nil {
+                    config?.setStaging(isStaging: isStaging!)               // Keep this as true if you want to access <client_id>.stage.verloop.io account. If the account doesn't exist, keep it as false or skip it
                 }
 
                 var customFields = args["ROOM_CUSTOM_FIELDS"] as? Dictionary<String, String>  // These are predefined variables added on room level
-                if customFields != null {
-                  for (key, value) in customFields {
-                    config.putCustomField(key, value, VerloopConfig.Scope.ROOM)
+                if customFields != nil {
+                  for (key, value) in customFields! {
+                    config?.putCustomField(key: key, value: value, scope: VLConfig.SCOPE.ROOM)
                   }
                 }
 
                 var userCustomFields = args["USER_CUSTOM_FIELDS"] as? Dictionary<String, String>  // These are predefined variables added on user level
-                if userCustomFields != null {
-                  for (key, value) in userCustomFields {
-                    config.putCustomField(key, value, VerloopConfig.Scope.USER)
+                if userCustomFields != nil {
+                  for (key, value) in userCustomFields! {
+                    config?.putCustomField(key: key, value: value, scope: VLConfig.SCOPE.USER)
                   }
                 }
 
@@ -92,10 +101,34 @@ public class SwiftVerloopFlutterSdkPlugin: NSObject, FlutterPlugin {
                                          message: "Wrong argument types",
                                          details: nil))
             }
-//         case "setButtonClickListener":
-//         case "setUrlClickListener":
-//         case "buildVerloop":
-//         case "showChat":
+        case "setButtonClickListener":
+            config?.setButtonOnClickListener(onButtonClicked:{(title: String?, type: String?, payload: String?) in
+                SwiftVerloopFlutterSdkPlugin.buttonHandler?.buttonClicked(title: title, type: type, payload: payload)
+                return;
+            })
+            result(1)
+        case "setUrlClickListener":
+            config?.setUrlClickListener(onUrlClicked:{(url: String?) in
+                SwiftVerloopFlutterSdkPlugin.urlHandler?.urlClicked(url: url)
+                return;
+            })
+            result(1)
+        case "buildVerloop":
+            if config == nil {
+                result(FlutterError.init(code: SwiftVerloopFlutterSdkPlugin.ERROR_101,
+                                         message: "config missing",
+                                         details: "call setConfig before calling buildVerloop"))
+                return
+            }
+            verloop = VerloopSDK(config: config!)
+        case "showChat":
+            if verloop == nil {
+                result(FlutterError.init(code: SwiftVerloopFlutterSdkPlugin.ERROR_101,
+                                         message: "verloop object missing",
+                                         details: "call buildVerloop before calling showChat"))
+                return
+            }
+            verloop?.start()
         default:
             result(FlutterMethodNotImplemented)
     }

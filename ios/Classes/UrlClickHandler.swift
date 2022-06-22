@@ -9,7 +9,7 @@ class UrlClickHandler: NSObject, FlutterStreamHandler{
         return nil
     }
 
-    @objc func buttonClicked(url: String?) {
+    @objc func urlClicked(url: String?) {
         guard let sink = sink else { return }
         let dictionary = ["URL": url]
         sink(dictionary)
