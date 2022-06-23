@@ -31,7 +31,10 @@ class VerloopFlutterSdkWeb extends VerloopFlutterSdkPlatform {
     String? fcmToken,
     String? userName,
     String? userEmail,
-    String? userPhone}) async {
+    String? userPhone,
+    Map<String, String>? userVariables,
+    Map<String, String>? roomVariables,
+  }) async {
     throw UnimplementedError('setConfig() has not been implemented.');
   }
 
@@ -49,6 +52,14 @@ class VerloopFlutterSdkWeb extends VerloopFlutterSdkPlatform {
 
   Future<void> startChat() async {
     throw UnimplementedError('startChat() has not been implemented.');
+  }
+
+  Stream<ButtonClickValue> get onButtonClicked {
+    throw UnimplementedError('onButtonClicked() has not been implemented.');
+  }
+
+  Stream<UrlClickValue> get onUrlClicked {
+    throw UnimplementedError('onUrlClicked() has not been implemented.');
   }
 
   Future<void> dispose() async {

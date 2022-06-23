@@ -30,7 +30,10 @@ class MethodChannelVerloopFlutterSdk extends VerloopFlutterSdkPlatform {
     String? fcmToken,
     String? userName,
     String? userEmail,
-    String? userPhone}) async {
+    String? userPhone,
+    Map<String, String>? userVariables,
+    Map<String, String>? roomVariables,
+  }) async {
     try {
       await verloopMethods
           .invokeMethod('setConfig', <String, dynamic>{
@@ -41,6 +44,8 @@ class MethodChannelVerloopFlutterSdk extends VerloopFlutterSdkPlatform {
         'USER_NAME': userName,
         'USER_EMAIL': userEmail,
         'USER_PHONE': userPhone,
+        'USER_CUSTOM_FIELDS': userVariables,
+        'ROOM_CUSTOM_FIELDS': roomVariables,
       });
     } on PlatformException catch (e) {
       log("Failed to set config for the widget: '${e.message}'.");
@@ -107,7 +112,6 @@ class MethodChannelVerloopFlutterSdk extends VerloopFlutterSdkPlatform {
       return UrlClickValue(url);
     });
   }
-
 
   @override
   Future<void> dispose() async {

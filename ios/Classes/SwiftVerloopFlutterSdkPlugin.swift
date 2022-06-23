@@ -2,7 +2,9 @@ import Flutter
 import UIKit
 import VerloopSDKiOS
 
-public class SwiftVerloopFlutterSdkPlugin: NSObject, FlutterPlugin {
+public class SwiftVerloopFlutterSdkPlugin: NSObject, FlutterPlugin, VLEventDelegate {
+  private var previousWindow: UIWindow? = nil
+  private var window = UIWindow()
 
   private static var methodChannel = "verloop.flutter.dev/method-call"
   private static var buttonClickChannel = "verloop.flutter.dev/events/button-click'"
@@ -121,6 +123,7 @@ public class SwiftVerloopFlutterSdkPlugin: NSObject, FlutterPlugin {
                 return
             }
             verloop = VerloopSDK(config: config!)
+            verloop?.observeLiveChatEventsOn(vlEventDelegate: self)
         case "showChat":
             if verloop == nil {
                 result(FlutterError.init(code: SwiftVerloopFlutterSdkPlugin.ERROR_101,
@@ -128,9 +131,22 @@ public class SwiftVerloopFlutterSdkPlugin: NSObject, FlutterPlugin {
                                          details: "call buildVerloop before calling showChat"))
                 return
             }
-            verloop?.start()
+            previousWindow = UIApplication.shared.keyWindow
+            window.isOpaque = true
+//             window.backgroundColor = UIColor.white
+//             window.frame = UIScreen.main.bounds
+
+            window.windowLevel = UIWindow.Level.normal + 1
+            window.rootViewController = verloop!.getNavController()
+            window.makeKeyAndVisible()
         default:
             result(FlutterMethodNotImplemented)
     }
+  }
+  public func onChatMinimized() {
+      window.resignKey()
+      previousWindow?.makeKeyAndVisible()
+      previousWindow = nil
+      window.windowLevel = UIWindow.Level.normal - 30
   }
 }

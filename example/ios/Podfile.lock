@@ -2,8 +2,8 @@ PODS:
   - Flutter (1.0.0)
   - verloop_flutter_sdk (0.0.1):
     - Flutter
-    - VerloopSDKiOS
-  - VerloopSDKiOS (0.1.6)
+    - VerloopSDKiOS (= 0.2.0)
+  - VerloopSDKiOS (0.2.0)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
@@ -21,8 +21,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
-  verloop_flutter_sdk: 486dd40fcaad7ebd6f3f0226ef4b5457a6a6e427
-  VerloopSDKiOS: 6b805e3a18ef640391538da6e0a63565827977f8
+  verloop_flutter_sdk: 347b8ba132002464995bc4fe56ce93395827daa0
+  VerloopSDKiOS: b018c0666fb497820888af1876a567c2576074ea
 
 PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
 

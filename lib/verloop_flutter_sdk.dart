@@ -21,6 +21,9 @@ class VerloopWidget extends StatefulWidget {
   final bool overrideUrlOnClick;
   final Widget? child;
 
+  final Map<String, String>? userVariables;
+  final Map<String, String>? roomVariables;
+
   const VerloopWidget({Key? key,
     required this.clientId,
     this.child,
@@ -30,6 +33,8 @@ class VerloopWidget extends StatefulWidget {
     this.userName,
     this.userEmail,
     this.userPhone,
+    this.userVariables,
+    this.roomVariables,
     this.overrideUrlOnClick = false})
       : super(key: key);
 
@@ -66,6 +71,8 @@ class _VerloopWidgetState extends State<VerloopWidget> {
       userName: widget.userName,
       userEmail: widget.userEmail,
       userPhone: widget.userPhone,
+      userVariables: widget.userVariables,
+      roomVariables: widget.roomVariables,
     );
     sdk?.setButtonClickListener();
     sdk?.setUrlClickListener(overrideUrlOnClick: widget.overrideUrlOnClick);
@@ -105,15 +112,19 @@ class VerloopSdk {
     String? fcmToken,
     String? userName,
     String? userEmail,
-    String? userPhone}) async {
+    String? userPhone,
+    Map<String, String>? userVariables,
+    Map<String, String>? roomVariables}) async {
     return await VerloopFlutterSdkPlatform.instance.setConfig(
-        clientId: clientId,
-        userId: userId,
-        recipeId: recipeId,
-        fcmToken: fcmToken,
-        userName: userName,
-        userEmail: userEmail,
-        userPhone: userPhone
+      clientId: clientId,
+      userId: userId,
+      recipeId: recipeId,
+      fcmToken: fcmToken,
+      userName: userName,
+      userEmail: userEmail,
+      userPhone: userPhone,
+      userVariables: userVariables,
+      roomVariables: roomVariables,
     );
   }
 
@@ -122,7 +133,8 @@ class VerloopSdk {
   }
 
   Future<void> setUrlClickListener({bool overrideUrlOnClick = false}) async {
-    return await VerloopFlutterSdkPlatform.instance.setUrlClickListener(overrideUrlOnClick: overrideUrlOnClick);
+    return await VerloopFlutterSdkPlatform.instance.setUrlClickListener(
+        overrideUrlOnClick: overrideUrlOnClick);
   }
 
   Future<void> buildVerloop() async {
@@ -131,6 +143,14 @@ class VerloopSdk {
 
   Future<void> startChat() async {
     return await VerloopFlutterSdkPlatform.instance.startChat();
+  }
+
+  Stream<ButtonClickValue> get onButtonClicked {
+    return VerloopFlutterSdkPlatform.instance.onButtonClicked;
+  }
+
+  Stream<UrlClickValue> get onUrlClicked {
+    return VerloopFlutterSdkPlatform.instance.onUrlClicked;
   }
 
   Future<void> dispose() async {

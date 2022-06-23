@@ -22,20 +22,21 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Plugin example app'),
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          title: const Text('Plugin example app'),
+        ),
+        body: const Center(
+          child: Text('Running for client $_clientId'),
+        ),
+        floatingActionButton: const VerloopWidget(
+          clientId: _clientId,
+          child: FloatingActionButton(
+            onPressed: null,
+            child: Icon(Icons.chat),
           ),
-          body: const Center(
-            child: Text('Running for client $_clientId'),
-          ),
-          floatingActionButton: const VerloopWidget(
-            clientId: _clientId,
-            child: FloatingActionButton(
-              tooltip: "Support",
-              onPressed: null,
-              child: Icon(Icons.chat),
-            ),
-          )),
+        ),
+      ),
     );
   }
 }

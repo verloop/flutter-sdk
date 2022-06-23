@@ -2,6 +2,9 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'verloop_flutter_sdk_method_channel.dart';
 
+import 'url_click_values.dart';
+import 'button_click_values.dart';
+
 abstract class VerloopFlutterSdkPlatform extends PlatformInterface {
   /// Constructs a VerloopFlutterSdkPlatform.
   VerloopFlutterSdkPlatform() : super(token: _token);
@@ -14,7 +17,7 @@ abstract class VerloopFlutterSdkPlatform extends PlatformInterface {
   ///
   /// Defaults to [MethodChannelVerloopFlutterSdk].
   static VerloopFlutterSdkPlatform get instance => _instance;
-  
+
   /// Platform-specific implementations should set this with their own
   /// platform-specific class that extends [VerloopFlutterSdkPlatform] when
   /// they register themselves.
@@ -30,12 +33,16 @@ abstract class VerloopFlutterSdkPlatform extends PlatformInterface {
     String? fcmToken,
     String? userName,
     String? userEmail,
-    String? userPhone}) async {
+    String? userPhone,
+    Map<String, String>? userVariables,
+    Map<String, String>? roomVariables,
+  }) async {
     throw UnimplementedError('setConfig() has not been implemented.');
   }
 
   Future<void> setButtonClickListener() async {
-    throw UnimplementedError('setButtonClickListener() has not been implemented.');
+    throw UnimplementedError(
+        'setButtonClickListener() has not been implemented.');
   }
 
   Future<void> setUrlClickListener({bool overrideUrlOnClick = false}) async {
@@ -48,6 +55,14 @@ abstract class VerloopFlutterSdkPlatform extends PlatformInterface {
 
   Future<void> startChat() async {
     throw UnimplementedError('startChat() has not been implemented.');
+  }
+
+  Stream<ButtonClickValue> get onButtonClicked {
+    throw UnimplementedError('onButtonClicked() has not been implemented.');
+  }
+
+  Stream<UrlClickValue> get onUrlClicked {
+    throw UnimplementedError('onUrlClicked() has not been implemented.');
   }
 
   Future<void> dispose() async {
