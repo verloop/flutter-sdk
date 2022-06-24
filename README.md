@@ -58,3 +58,5 @@ A very common use case for this is navigating the user to another section of the
 ### Handling notifications
 
 `flutter pub add firebase_messaging`
+
+follow this https://firebase.google.com/docs/flutter/setup
