@@ -34,8 +34,8 @@ class VerloopFlutterSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware 
     private lateinit var urlClickHandler: UrlClickHandler
 
     private val CHANNEL = "verloop.flutter.dev/method-call"
-    private val CALLBACK_BUTTON_CLICK_CHANNEL = "verloop.flutter.dev/events/button-click'"
-    private val CALLBACK_URL_CLICK_CHANNEL = "verloop.flutter.dev/events/url-click'"
+    private val CALLBACK_BUTTON_CLICK_CHANNEL = "verloop.flutter.dev/events/button-click"
+    private val CALLBACK_URL_CLICK_CHANNEL = "verloop.flutter.dev/events/url-click"
 
     private val ERROR_101 = "101" // verloop object not built
     private val ERROR_102 = "102" // client id not defined

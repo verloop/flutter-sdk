@@ -21,6 +21,8 @@ class VerloopWidget extends StatefulWidget {
   final bool overrideUrlOnClick;
   final Widget? child;
 
+  final Function(String? title, String? payload, String? type)? onButtonClicked;
+
   final Map<String, String>? userVariables;
   final Map<String, String>? roomVariables;
 
@@ -35,6 +37,7 @@ class VerloopWidget extends StatefulWidget {
     this.userPhone,
     this.userVariables,
     this.roomVariables,
+    this.onButtonClicked,
     this.overrideUrlOnClick = false})
       : super(key: key);
 
@@ -77,6 +80,10 @@ class _VerloopWidgetState extends State<VerloopWidget> {
     sdk?.setButtonClickListener();
     sdk?.setUrlClickListener(overrideUrlOnClick: widget.overrideUrlOnClick);
     sdk?.buildVerloop();
+    sdk?.onButtonClicked.listen((event) {
+      print("came here!!!!!!!");
+      widget.onButtonClicked?.call(event.title, event.payload, event.type);
+    });
     setState(() {
       _ready = true;
     });
@@ -105,6 +112,7 @@ class _VerloopWidgetState extends State<VerloopWidget> {
 }
 
 class VerloopSdk {
+
   Future<void> setConfig({
     required String clientId,
     String? userId,

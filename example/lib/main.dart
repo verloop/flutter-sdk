@@ -55,6 +55,10 @@ class _MyAppState extends State<MyApp> {
                 userName: "Raghav",
                 userEmail: "test@verloop.io",
                 userPhone: "+919001501111",
+                onButtonClicked:
+                    (String? title, String? payload, String? type) {
+                  print("button click title $title");
+                },
                 child: const FloatingActionButton(
                   onPressed: null,
                   child: Icon(Icons.chat),

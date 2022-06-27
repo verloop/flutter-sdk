@@ -7,8 +7,8 @@ public class SwiftVerloopFlutterSdkPlugin: NSObject, FlutterPlugin, VLEventDeleg
   private var window = UIWindow()
 
   private static var methodChannel = "verloop.flutter.dev/method-call"
-  private static var buttonClickChannel = "verloop.flutter.dev/events/button-click'"
-  private static var urlClickChannel = "verloop.flutter.dev/events/url-click'"
+  private static var buttonClickChannel = "verloop.flutter.dev/events/button-click"
+  private static var urlClickChannel = "verloop.flutter.dev/events/url-click"
 
   private static var buttonHandler: ButtonClickHandler?
   private static var urlHandler: UrlClickHandler?
