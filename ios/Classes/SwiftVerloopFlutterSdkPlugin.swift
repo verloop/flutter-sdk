@@ -110,6 +110,12 @@ public class SwiftVerloopFlutterSdkPlugin: NSObject, FlutterPlugin, VLEventDeleg
             })
             result(1)
         case "setUrlClickListener":
+            if let args = call.arguments as? Dictionary<String, Any> {
+                var overrideUrl = args["OVERRIDE_URL"] as? Bool
+                if overrideUrl != nil {
+                    config?.setUrlRedirectionFlag(canRedirect: !overrideUrl!)               // if you wish to open the url in a browser, then keep it as false
+                }
+            }
             config?.setUrlClickListener(onUrlClicked:{(url: String?) in
                 SwiftVerloopFlutterSdkPlugin.urlHandler?.urlClicked(url: url)
                 return;
