@@ -61,11 +61,11 @@ PODS:
     - nanopb/encode (= 2.30908.0)
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
-  - PromisesObjC (2.1.0)
-  - verloop_flutter_sdk (0.0.1):
+  - PromisesObjC (2.1.1)
+  - verloop_flutter_sdk (0.0.2):
     - Flutter
-    - VerloopSDKiOS (= 0.2.0)
-  - VerloopSDKiOS (0.2.0)
+    - VerloopSDKiOS (= 0.2.2)
+  - VerloopSDKiOS (0.2.2)
 
 DEPENDENCIES:
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
@@ -108,9 +108,9 @@ SPEC CHECKSUMS:
   GoogleDataTransport: 5fffe35792f8b96ec8d6775f5eccd83c998d5a3b
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
-  PromisesObjC: 99b6f43f9e1044bd87a95a60beff28c2c44ddb72
-  verloop_flutter_sdk: 347b8ba132002464995bc4fe56ce93395827daa0
-  VerloopSDKiOS: b018c0666fb497820888af1876a567c2576074ea
+  PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
+  verloop_flutter_sdk: 39648edff2dcf9735a39aaf6e5f8a925483405b6
+  VerloopSDKiOS: 0d7e7b3de79b89b01a687ba9afd3c1c4b4eb344f
 
 PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
 

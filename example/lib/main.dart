@@ -23,7 +23,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final String clientId = "hello";
+  final String clientId = "hello.stage";
   final Map<String, String> roomMap = {"key1": "value1"};
   final Map<String, String> userMap = {"key2": "value2"};
 
