@@ -1,23 +1,20 @@
 package io.verloop.verloop_flutter_sdk
 
 import android.app.Activity
-import android.content.Context
+import android.util.Log
 import androidx.annotation.NonNull
 import io.flutter.embedding.engine.plugins.FlutterPlugin
+import io.flutter.embedding.engine.plugins.activity.ActivityAware
+import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
+import io.flutter.plugin.common.MethodChannel.MethodCallHandler
+import io.flutter.plugin.common.MethodChannel.Result
 import io.verloop.sdk.LiveChatButtonClickListener
 import io.verloop.sdk.LiveChatUrlClickListener
 import io.verloop.sdk.Verloop
 import io.verloop.sdk.VerloopConfig
-import java.util.ArrayList
-import io.flutter.embedding.engine.plugins.activity.ActivityAware
-import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
-
-
-import io.flutter.plugin.common.MethodChannel.MethodCallHandler
-import io.flutter.plugin.common.MethodChannel.Result
 
 /** VerloopFlutterSdkPlugin */
 class VerloopFlutterSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
@@ -183,19 +180,20 @@ class VerloopFlutterSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware 
                     }
 
                 }
-
-                val config = configBuilder!!
-                    .clientId(clientId)
-                    .build()
-
-                config.setButtonClickListener(object : LiveChatButtonClickListener {
+                if (this.config == null) {
+                    this.config = configBuilder!!
+                        .clientId(clientId)
+                        .build()
+                }
+                Log.d("verloop_sdk", "subscribibg to button listener $clientId")
+                this.config?.setButtonClickListener(object : LiveChatButtonClickListener {
                     override fun buttonClicked(title: String?, type: String?, payload: String?) {
                         // Add the app logic for button click
+                        Log.d("verloop_sdk", "button clickckckck")
                         buttonClickHandler.buttonClicked(title, type, payload)
                     }
                 })
 
-                this.config = config
                 result.success(1)
                 return
             }
@@ -222,18 +220,18 @@ class VerloopFlutterSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware 
                     overrideUrlClick = false
                 }
 
-                val config = configBuilder!!
-                    .clientId(clientId)
-                    .build()
+                if (this.config == null) {
+                    this.config = configBuilder!!
+                        .clientId(clientId)
+                        .build()
+                }
 
-                config.setUrlClickListener(object : LiveChatUrlClickListener {
+                this.config?.setUrlClickListener(object : LiveChatUrlClickListener {
                     override fun urlClicked(url: String?) {
                         // Add the app logic for button click
                         urlClickHandler.urlClicked(url)
                     }
                 }, overrideUrlClick)
-
-                this.config = config
                 result.success(1)
                 return
             }
