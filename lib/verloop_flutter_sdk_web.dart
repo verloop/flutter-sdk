@@ -2,7 +2,7 @@
 // of your plugin as a separate package, instead of inlining it in the same
 // package as the core of your plugin.
 // ignore: avoid_web_libraries_in_flutter
-import 'dart:html' as html show window;
+// import 'dart:html' as html show window;
 
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
@@ -24,6 +24,7 @@ class VerloopFlutterSdkWeb extends VerloopFlutterSdkPlatform {
     return version;
   }*/
 
+  @override
   Future<void> setConfig({
     required String clientId,
     String? userId,
@@ -38,30 +39,37 @@ class VerloopFlutterSdkWeb extends VerloopFlutterSdkPlatform {
     throw UnimplementedError('setConfig() has not been implemented.');
   }
 
+  @override
   Future<void> setButtonClickListener() async {
-    throw UnimplementedError('setButtonClickListener() has not been implemented.');
+    throw UnimplementedError(
+        'setButtonClickListener() has not been implemented.');
   }
 
+  @override
   Future<void> setUrlClickListener({bool overrideUrlOnClick = false}) async {
     throw UnimplementedError('setUrlClickListener() has not been implemented.');
   }
 
+  @override
   Future<void> buildVerloop() async {
     throw UnimplementedError('buildVerloop() has not been implemented.');
   }
 
+  @override
   Future<void> startChat() async {
     throw UnimplementedError('startChat() has not been implemented.');
   }
 
-  Stream<ButtonClickValue> get onButtonClicked {
-    throw UnimplementedError('onButtonClicked() has not been implemented.');
-  }
+  // @override
+  // Stream<ButtonClickValue> get onButtonClicked {
+  //   throw UnimplementedError('onButtonClicked() has not been implemented.');
+  // }
+  //
+  // Stream<UrlClickValue> get onUrlClicked {
+  //   throw UnimplementedError('onUrlClicked() has not been implemented.');
+  // }
 
-  Stream<UrlClickValue> get onUrlClicked {
-    throw UnimplementedError('onUrlClicked() has not been implemented.');
-  }
-
+  @override
   Future<void> dispose() async {
     throw UnimplementedError('dispose() has not been implemented.');
   }

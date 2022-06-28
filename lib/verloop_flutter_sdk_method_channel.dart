@@ -13,15 +13,15 @@ class MethodChannelVerloopFlutterSdk extends VerloopFlutterSdkPlatform {
   /// The method channel used to interact with the native platform.
   @visibleForTesting
   final verloopMethods =
-  MethodChannel('verloop.flutter.dev/method-call');
+  const MethodChannel('verloop.flutter.dev/method-call');
 
   @visibleForTesting
   final EventChannel verloopButtonClickEvents =
-  EventChannel('verloop.flutter.dev/events/button-click');
+  const EventChannel('verloop.flutter.dev/events/button-click');
 
   @visibleForTesting
   final EventChannel verloopUrlClickEvents =
-  EventChannel('verloop.flutter.dev/events/url-click');
+  const EventChannel('verloop.flutter.dev/events/url-click');
 
   @override
   Future<void> setConfig({required String clientId,

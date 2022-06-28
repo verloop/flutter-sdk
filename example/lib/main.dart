@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +23,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final String clientId = "hello.stage";
+  final String clientId = "hello";
   final Map<String, String> roomMap = {"key1": "value1"};
   final Map<String, String> userMap = {"key2": "value2"};
 
@@ -57,11 +59,10 @@ class _MyAppState extends State<MyApp> {
                 userPhone: "+919001501111",
                 onButtonClicked:
                     (String? title, String? payload, String? type) {
-                  print("button click title $title");
+                  log("button click title $title $payload");
                 },
-                onUrlClicked:
-                    (String? url) {
-                  print("url clicked $url");
+                onUrlClicked: (String? url) {
+                  log("url clicked $url");
                 },
                 overrideUrlOnClick: true,
                 child: const FloatingActionButton(

@@ -1,13 +1,11 @@
-import 'verloop_flutter_sdk_platform_interface.dart';
-
 import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-import 'url_click_values.dart';
 import 'button_click_values.dart';
+import 'url_click_values.dart';
+import 'verloop_flutter_sdk_platform_interface.dart';
 
 class VerloopWidget extends StatefulWidget {
 

@@ -1,9 +1,8 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:verloop_flutter_sdk/verloop_flutter_sdk_method_channel.dart';
 
 void main() {
-  MethodChannelVerloopFlutterSdk platform = MethodChannelVerloopFlutterSdk();
+  // MethodChannelVerloopFlutterSdk platform = MethodChannelVerloopFlutterSdk();
   const MethodChannel channel = MethodChannel('verloop_flutter_sdk');
 
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -16,9 +15,5 @@ void main() {
 
   tearDown(() {
     channel.setMockMethodCallHandler(null);
-  });
-
-  test('getPlatformVersion', () async {
-    expect(await platform.getPlatformVersion(), '42');
   });
 }
