@@ -1,3 +1,5 @@
 ## 0.0.1
 
-* TODO: Describe initial release.
+* Added Android wrapper
+* Added iOS wrappers
+* Updated Readme
