@@ -12,19 +12,19 @@ import 'verloop_flutter_sdk_platform_interface.dart';
 class MethodChannelVerloopFlutterSdk extends VerloopFlutterSdkPlatform {
   /// The method channel used to interact with the native platform.
   @visibleForTesting
-  final verloopMethods =
-  const MethodChannel('verloop.flutter.dev/method-call');
+  final verloopMethods = const MethodChannel('verloop.flutter.dev/method-call');
 
   @visibleForTesting
   final EventChannel verloopButtonClickEvents =
-  const EventChannel('verloop.flutter.dev/events/button-click');
+      const EventChannel('verloop.flutter.dev/events/button-click');
 
   @visibleForTesting
   final EventChannel verloopUrlClickEvents =
-  const EventChannel('verloop.flutter.dev/events/url-click');
+      const EventChannel('verloop.flutter.dev/events/url-click');
 
   @override
-  Future<void> setConfig({required String clientId,
+  Future<void> setConfig({
+    required String clientId,
     String? userId,
     String? recipeId,
     String? fcmToken,
@@ -35,8 +35,7 @@ class MethodChannelVerloopFlutterSdk extends VerloopFlutterSdkPlatform {
     Map<String, String>? roomVariables,
   }) async {
     try {
-      await verloopMethods
-          .invokeMethod('setConfig', <String, dynamic>{
+      await verloopMethods.invokeMethod('setConfig', <String, dynamic>{
         'USER_ID': userId,
         'CLIENT_ID': clientId,
         'RECIPE_ID': recipeId,

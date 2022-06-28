@@ -5,10 +5,9 @@ import 'package:verloop_flutter_sdk/url_click_values.dart';
 import 'package:verloop_flutter_sdk/verloop_flutter_sdk_method_channel.dart';
 import 'package:verloop_flutter_sdk/verloop_flutter_sdk_platform_interface.dart';
 
-class MockVerloopFlutterSdkPlatform 
+class MockVerloopFlutterSdkPlatform
     with MockPlatformInterfaceMixin
     implements VerloopFlutterSdkPlatform {
-
   @override
   Future<void> buildVerloop() {
     // TODO: implement buildVerloop
@@ -36,7 +35,16 @@ class MockVerloopFlutterSdkPlatform
   }
 
   @override
-  Future<void> setConfig({required String clientId, String? userId, String? recipeId, String? fcmToken, String? userName, String? userEmail, String? userPhone, Map<String, String>? userVariables, Map<String, String>? roomVariables}) {
+  Future<void> setConfig(
+      {required String clientId,
+      String? userId,
+      String? recipeId,
+      String? fcmToken,
+      String? userName,
+      String? userEmail,
+      String? userPhone,
+      Map<String, String>? userVariables,
+      Map<String, String>? roomVariables}) {
     // TODO: implement setConfig
     throw UnimplementedError();
   }
@@ -55,7 +63,8 @@ class MockVerloopFlutterSdkPlatform
 }
 
 void main() {
-  final VerloopFlutterSdkPlatform initialPlatform = VerloopFlutterSdkPlatform.instance;
+  final VerloopFlutterSdkPlatform initialPlatform =
+      VerloopFlutterSdkPlatform.instance;
 
   test('$MethodChannelVerloopFlutterSdk is the default instance', () {
     expect(initialPlatform, isInstanceOf<MethodChannelVerloopFlutterSdk>());
