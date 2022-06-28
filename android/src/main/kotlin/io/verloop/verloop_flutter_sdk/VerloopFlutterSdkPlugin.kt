@@ -185,11 +185,9 @@ class VerloopFlutterSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware 
                         .clientId(clientId)
                         .build()
                 }
-                Log.d("verloop_sdk", "subscribibg to button listener $clientId")
                 this.config?.setButtonClickListener(object : LiveChatButtonClickListener {
                     override fun buttonClicked(title: String?, type: String?, payload: String?) {
                         // Add the app logic for button click
-                        Log.d("verloop_sdk", "button clickckckck")
                         buttonClickHandler.buttonClicked(title, type, payload)
                     }
                 })

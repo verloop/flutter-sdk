@@ -51,7 +51,7 @@ class _MyAppState extends State<MyApp> {
                 fcmToken: token,
                 roomVariables: roomMap,
                 userVariables: userMap,
-                userId: "1234",
+                userId: "12345",
                 userName: "Raghav",
                 userEmail: "test@verloop.io",
                 userPhone: "+919001501111",
@@ -59,6 +59,11 @@ class _MyAppState extends State<MyApp> {
                     (String? title, String? payload, String? type) {
                   print("button click title $title");
                 },
+                onUrlClicked:
+                    (String? url) {
+                  print("url clicked $url");
+                },
+                overrideUrlOnClick: true,
                 child: const FloatingActionButton(
                   onPressed: null,
                   child: Icon(Icons.chat),
