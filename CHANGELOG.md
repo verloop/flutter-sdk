@@ -1,3 +1,8 @@
+## 0.0.3
+
+* Improved documentation
+* Fixed linting issues
+
 ## 0.0.2
 
 * Fixed imports and unknown type errors
