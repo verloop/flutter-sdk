@@ -116,7 +116,7 @@ Once the fcm is setup, just send the `fcmToken` as a part of `VerloopWidget`.
 NOTE: make sure the server key is added to the verloop's setting page for the same firebase app which is configured in your flutter app.
 
 To Navigate to the verloop's setting page
-- open https://<client_id>.verloop.io
+- open https://client_id.verloop.io
 - go to settings gear icon on the left navigation panel
 - search for android sdk
 - add the server key as production
