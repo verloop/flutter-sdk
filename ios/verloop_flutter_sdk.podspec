@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'verloop_flutter_sdk'
-  s.version          = '0.0.2'
+  s.version          = '0.0.4'
   s.summary          = 'Flutter SDK'
   s.description      = <<-DESC
 This is a wrapper over native SDK for flutter app
@@ -15,7 +15,7 @@ This is a wrapper over native SDK for flutter app
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency "VerloopSDKiOS", "0.2.2"
+  s.dependency "VerloopSDKiOS", "0.2.5"
   s.platform = :ios, '11.0'
 
   # Flutter.framework does not contain a i386 slice.

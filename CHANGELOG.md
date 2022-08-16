@@ -1,3 +1,8 @@
+## 0.0.4
+
+* Updated iOS native sdk version
+* Fixed image uploads in iOS
+
 ## 0.0.3
 
 * Improved documentation
