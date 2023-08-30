@@ -1,5 +1,3 @@
-# Verloop's flutter SDK
-
 This is a wrapper over native verloop's [iOS](https://github.com/verloop/ios-sdk) and [Android](https://github.com/verloop/android-sdk) SDK.
 
 You can checkout sample app for any clarification on the usage of the SDK
