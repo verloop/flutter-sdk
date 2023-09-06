@@ -48,5 +48,5 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.github.verloop:android-sdk:1.1.1-rc.2'
+    implementation 'com.github.verloop:android-sdk:v1.1.8'
 }
