@@ -1,6 +1,5 @@
 ## 0.0.5
-
-* Updated Android version
+* Updated android version
 
 ## 0.0.4
 
