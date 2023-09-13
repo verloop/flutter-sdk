@@ -1,3 +1,7 @@
+## 0.0.5
+
+* Updated Android version
+
 ## 0.0.4
 
 * Updated iOS native sdk version
