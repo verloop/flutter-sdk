@@ -2,6 +2,7 @@ package io.verloop.verloop_flutter_sdk
 
 import android.app.Activity
 import android.util.Log
+import android.view.inputmethod.InputBinding
 import androidx.annotation.NonNull
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
@@ -62,20 +63,20 @@ class VerloopFlutterSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware 
 
     }
 
-    override fun onDetachedFromActivity() {
-        TODO("Not yet implemented")
-    }
-
-    override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
-        TODO("Not yet implemented")
-    }
-
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
         activity = binding.activity;
     }
 
     override fun onDetachedFromActivityForConfigChanges() {
-        TODO("Not yet implemented")
+
+    }
+
+    override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
+
+    }
+
+    override fun onDetachedFromActivity() {
+
     }
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
