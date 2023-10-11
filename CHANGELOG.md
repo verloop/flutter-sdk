@@ -1,3 +1,7 @@
+## 0.0.7
+
+* Handled the error case on disposing of widget state
+
 ## 0.0.6
 
 * Fixed crashes on resume

@@ -284,8 +284,10 @@ class VerloopFlutterSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware 
                 configBuilder = null
                 clientId = null
                 config = null
-                buttonCallbackChannel.setStreamHandler(null)
-                urlCallbackChannel.setStreamHandler(null)
+                buttonClickHandler = ButtonClickHandler()
+                buttonCallbackChannel.setStreamHandler(buttonClickHandler)
+                urlClickHandler = UrlClickHandler()
+                urlCallbackChannel.setStreamHandler(urlClickHandler)
                 return
             }
             else -> {
