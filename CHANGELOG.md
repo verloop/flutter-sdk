@@ -1,3 +1,7 @@
+## 0.0.8
+
+* Upgraded iOS sdk version
+
 ## 0.0.7
 
 * Handled the error case on disposing of widget state
