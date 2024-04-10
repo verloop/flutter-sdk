@@ -5,7 +5,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:verloop_flutter_sdk/verloop_flutter_sdk.dart';
-
 import 'firebase_options.dart';
 
 void main() async {
