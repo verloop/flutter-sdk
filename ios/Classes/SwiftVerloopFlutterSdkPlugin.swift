@@ -145,6 +145,13 @@ public class SwiftVerloopFlutterSdkPlugin: NSObject, FlutterPlugin, VLEventDeleg
             window.windowLevel = UIWindow.Level.normal + 1
             window.rootViewController = verloop!.getNavController()
             window.makeKeyAndVisible()
+       case "dispose":
+            verloop = nil
+            clientId = nil
+            config?.setUrlClickListener(onUrlClicked: nil)
+            config?.setButtonOnClickListener(onButtonClicked: nil)
+            config = nil
+            return
         default:
             result(FlutterMethodNotImplemented)
     }
