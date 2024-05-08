@@ -1,3 +1,8 @@
+## 0.0.9
+
+* Upgraded Andorid sdk version
+* Handled dispose method in iOS
+
 ## 0.0.8
 
 * Upgraded iOS sdk version
