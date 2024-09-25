@@ -71,6 +71,27 @@ class MethodChannelVerloopFlutterSdk extends VerloopFlutterSdkPlatform {
       log("Failed to set url click listener: '${e.message}'.");
     }
   }
+  
+  @override
+   Future<void> openMenuWidget() async {
+    try {
+      await verloopMethods.invokeMethod('openMenuWidget');
+    } on PlatformException catch (e) {
+      log("Failed to load widget: '${e.message}'.");
+    }
+  }
+
+  @override
+  Future<void> showDownloadButton({bool isAllowFileDownload = false}) async {
+     try {
+      await verloopMethods
+          .invokeMethod('showDownloadButton', <String, dynamic>{
+        'isAllowFileDownload': isAllowFileDownload,
+      });
+    } on PlatformException catch (e) {
+      log("Failed to set url click listener: '${e.message}'.");
+    }
+  }
 
   @override
   Future<void> buildVerloop() async {

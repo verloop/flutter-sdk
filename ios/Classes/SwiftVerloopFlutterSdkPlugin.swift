@@ -111,7 +111,7 @@ public class SwiftVerloopFlutterSdkPlugin: NSObject, FlutterPlugin, VLEventDeleg
             result(1)
         case "setUrlClickListener":
             if let args = call.arguments as? Dictionary<String, Any> {
-                var overrideUrl = args["OVERRIDE_URL"] as? Bool
+                let overrideUrl = args["OVERRIDE_URL"] as? Bool
                 if overrideUrl != nil {
                     config?.setUrlRedirectionFlag(canRedirect: !overrideUrl!)               // if you wish to open the url in a browser, then keep it as false
                 }
@@ -120,6 +120,17 @@ public class SwiftVerloopFlutterSdkPlugin: NSObject, FlutterPlugin, VLEventDeleg
                 SwiftVerloopFlutterSdkPlugin.urlHandler?.urlClicked(url: url)
                 return;
             })
+            result(1)
+        case "showDownloadButton":
+            if let args = call.arguments as? Dictionary<String, Any> {
+                let isAllowFileDownload = args["isAllowFileDownload"] as? Bool
+                if isAllowFileDownload != nil {
+                    config?.showDownloadButton(isAllowFileDownload ?? false)
+                }
+            }
+            result(1)
+        case "openMenuWidget":
+           config?.openMenuWidget()
             result(1)
         case "buildVerloop":
             if config == nil {

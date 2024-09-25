@@ -1,22 +1,21 @@
 import 'dart:developer';
-import 'dart:ffi';
 
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+//import 'package:firebase_core/firebase_core.dart';
+//import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:verloop_flutter_sdk/verloop_flutter_sdk.dart';
-import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+
+  // await Firebase.initializeApp(
+  //     // options: DefaultFirebaseOptions.currentPlatform,
+  //     );
   runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -173,44 +172,69 @@ class _MyAppState extends State<MyApp> {
         ),
         floatingActionButton: changed == true
             ? const SizedBox()
-            : FutureBuilder<String?>(
-                // Initialize FlutterFire
-                future: FirebaseMessaging.instance.getToken(),
-                builder: (context, snapshot) {
-                  // Check for errors
-                  if (snapshot.hasError) {
-                    return const Text("Something went wrong");
-                  }
-                  if (snapshot.hasData && snapshot.data != "") {
-                    String token = snapshot.data ?? "";
-
-                    return VerloopWidget(
-                      clientId: clientId,
-                      fcmToken: token,
-                      recipeId: recipeId,
-                      roomVariables: roomMap,
-                      userVariables: userMap,
-                      userId: userId,
-                      userName: userName,
-                      userEmail: userEmail,
-                      userPhone: userPhone,
-                      onButtonClicked:
-                          (String? title, String? payload, String? type) {
-                        log("button click title $title $payload");
-                      },
-                      onUrlClicked: (String? url) {
-                        log("url clicked $url");
-                      },
-                      overrideUrlOnClick: true,
-                      child: const FloatingActionButton(
-                        onPressed: null,
-                        child: Icon(Icons.chat),
-                      ),
-                    );
-                  }
-                  return const Text("Loading...");
-                },
-              ),
+            : VerloopWidget(
+          clientId: clientId,
+          // fcmToken: token,
+          // recipeId: recipeId,
+          // roomVariables: roomMap,
+          // userVariables: userMap,
+          // userId: userId,
+          // userName: userName,
+          // userEmail: userEmail,
+          userPhone: userPhone,
+          openMenuWidget: true,
+          showDownloadButton: false,
+          onButtonClicked:
+              (String? title, String? payload, String? type) {
+            log("button click title $title $payload");
+          },
+          onUrlClicked: (String? url) {
+            log("url clicked $url");
+          },
+          overrideUrlOnClick: true,
+          child: const FloatingActionButton(
+            onPressed: null,
+            child: Icon(Icons.chat),
+          ),
+        )
+            // : FutureBuilder<String?>(
+            //     // Initialize FlutterFire
+            //     future: FirebaseMessaging.instance.getToken(),
+            //     builder: (context, snapshot) {
+            //       // Check for errors
+            //       if (snapshot.hasError) {
+            //         return const Text("Something went wrong");
+            //       }
+            //       if (snapshot.hasData && snapshot.data != "") {
+            //         String token = snapshot.data ?? "";
+            //
+            //         return VerloopWidget(
+            //           clientId: clientId,
+            //           fcmToken: token,
+            //           recipeId: recipeId,
+            //           roomVariables: roomMap,
+            //           userVariables: userMap,
+            //           userId: userId,
+            //           userName: userName,
+            //           userEmail: userEmail,
+            //           userPhone: userPhone,
+            //           onButtonClicked:
+            //               (String? title, String? payload, String? type) {
+            //             log("button click title $title $payload");
+            //           },
+            //           onUrlClicked: (String? url) {
+            //             log("url clicked $url");
+            //           },
+            //           overrideUrlOnClick: true,
+            //           child: const FloatingActionButton(
+            //             onPressed: null,
+            //             child: Icon(Icons.chat),
+            //           ),
+            //         );
+            //       }
+            //       return const Text("Loading...");
+            //     },
+            //   ),
       ),
     );
   }
