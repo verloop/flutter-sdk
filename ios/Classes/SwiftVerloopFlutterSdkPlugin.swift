@@ -5,6 +5,8 @@ import VerloopSDKiOS
 public class SwiftVerloopFlutterSdkPlugin: NSObject, FlutterPlugin, VLEventDelegate {
   private var previousWindow: UIWindow? = nil
   private var window = UIWindow()
+    
+  private var viewController: UIViewController?
 
   private static var methodChannel = "verloop.flutter.dev/method-call"
   private static var buttonClickChannel = "verloop.flutter.dev/events/button-click"
@@ -26,6 +28,7 @@ public class SwiftVerloopFlutterSdkPlugin: NSObject, FlutterPlugin, VLEventDeleg
     let channel = FlutterMethodChannel(name: methodChannel, binaryMessenger: registrar.messenger())
     let buttonChannel = FlutterEventChannel(name: buttonClickChannel, binaryMessenger: registrar.messenger())
     let urlChannel = FlutterEventChannel(name: urlClickChannel, binaryMessenger: registrar.messenger())
+    
 
     let instance = SwiftVerloopFlutterSdkPlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)
@@ -105,6 +108,9 @@ public class SwiftVerloopFlutterSdkPlugin: NSObject, FlutterPlugin, VLEventDeleg
             }
         case "setButtonClickListener":
             config?.setButtonOnClickListener(onButtonClicked:{(title: String?, type: String?, payload: String?) in
+                self.viewController?.dismiss(animated: true, completion: {
+                            self.viewController = nil // Clear the reference after dismissing
+                })
                 SwiftVerloopFlutterSdkPlugin.buttonHandler?.buttonClicked(title: title, type: type, payload: payload)
                 return;
             })
@@ -117,6 +123,9 @@ public class SwiftVerloopFlutterSdkPlugin: NSObject, FlutterPlugin, VLEventDeleg
                 }
             }
             config?.setUrlClickListener(onUrlClicked:{(url: String?) in
+                self.viewController?.dismiss(animated: true, completion: {
+                            self.viewController = nil // Clear the reference after dismissing
+                })
                 SwiftVerloopFlutterSdkPlugin.urlHandler?.urlClicked(url: url)
                 return;
             })
@@ -148,14 +157,24 @@ public class SwiftVerloopFlutterSdkPlugin: NSObject, FlutterPlugin, VLEventDeleg
                                          details: "call buildVerloop before calling showChat"))
                 return
             }
-            previousWindow = UIApplication.shared.keyWindow
-            window.isOpaque = true
-//             window.backgroundColor = UIColor.white
-//             window.frame = UIScreen.main.bounds
-
-            window.windowLevel = UIWindow.Level.normal + 1
-            window.rootViewController = verloop!.getNavController()
-            window.makeKeyAndVisible()
+//           previousWindow = UIApplication.shared.keyWindow
+//           window.isOpaque = true
+//           window.windowLevel = UIWindow.Level.normal + 1
+           //window.rootViewController = verloop!.getNavController()
+           //window.makeKeyAndVisible()
+//             if let topVC = UIApplication.shared.keyWindow?.rootViewController?.topMostViewController() {
+//                 viewController = topVC
+//                 viewController!.present(verloop!.getNavController(), animated: true, completion: nil)
+//               }
+           //viewController = UIApplication.shared.delegate!.window!!.rootViewController!
+           //viewController!.present(verloop!.getNavController(), animated: true, completion: nil)
+            //viewController(with: nil)?.present(verloop!.getNavController(), animated: true, completion: nil)
+        // Present the view controller
+            viewController = verloop!.getNavController()
+        if let rootVC = UIApplication.shared.delegate?.window??.rootViewController {
+            rootVC.present(viewController!, animated: true, completion: nil)
+        }
+        
        case "dispose":
             verloop = nil
             clientId = nil
@@ -173,4 +192,37 @@ public class SwiftVerloopFlutterSdkPlugin: NSObject, FlutterPlugin, VLEventDeleg
       previousWindow = nil
       window.windowLevel = UIWindow.Level.normal - 30
   }
+    
+    func viewController(with window: UIWindow?) -> UIViewController? {
+        var windowToUse = window
+        if windowToUse == nil {
+            for window in UIApplication.shared.windows {
+                if window.isKeyWindow {
+                    windowToUse = window
+                    break
+                }
+            }
+        }
+        
+        var topController = windowToUse?.rootViewController
+        while ((topController?.presentedViewController) != nil) {
+            topController = topController?.presentedViewController
+        }
+        return topController
+    }
+
+}
+
+extension UIViewController {
+    func topMostViewController() -> UIViewController {
+        if let presentedVC = self.presentedViewController {
+            return presentedVC.topMostViewController()
+        } else if let navVC = self as? UINavigationController {
+            return navVC.visibleViewController?.topMostViewController() ?? self
+        } else if let tabVC = self as? UITabBarController {
+            return tabVC.selectedViewController?.topMostViewController() ?? self
+        } else {
+            return self
+        }
+    }
 }
