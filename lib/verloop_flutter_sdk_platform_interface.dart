@@ -77,4 +77,9 @@ abstract class VerloopFlutterSdkPlatform extends PlatformInterface {
   Future<void> dispose() async {
     throw UnimplementedError('dispose() has not been implemented.');
   }
+
+  Future<void> dismissChat() async {
+    throw UnimplementedError('dismissChat() has not been implemented.');
+  }
+  
 }

@@ -27,6 +27,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final userEmailController = TextEditingController();
   final userPhoneController = TextEditingController();
   bool changed = true;
+  final VerloopSdk verloop = VerloopSdk();
+
 
   @override
   void initState() {
@@ -179,21 +181,22 @@ class _LoginScreenState extends State<LoginScreen> {
                 onButtonClicked:
                     (String? title, String? payload, String? type) {
                   log("button click title $title $payload");
+                  verloop.dismissChat();
                   if (payload != null) {
-                    Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(
-                            builder: (context) => HomeScreen(
-                                  title: title,
-                                  payload: payload,
-                                  type: type,
-                                )),
-                        (Route<dynamic> route) => route.isFirst);
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (context) => HomeScreen(
+                                title: title,
+                                payload: payload,
+                                type: type,
+                              )),
+                    );
                   }
-                  
                 },
                 onUrlClicked: (String? url) {
                   log("url clicked $url");
                   if (url != null) {
+                    verloop.dismissChat();
                     // Pop Verloop and remove all routes until the initial route
                     Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(

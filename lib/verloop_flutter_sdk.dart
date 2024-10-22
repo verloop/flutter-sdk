@@ -184,4 +184,9 @@ class VerloopSdk {
   Future<void> dispose() async {
     return await VerloopFlutterSdkPlatform.instance.dispose();
   }
+
+  Future<void> dismissChat() async {
+    return await VerloopFlutterSdkPlatform.instance.dismissChat();
+  }
+
 }
