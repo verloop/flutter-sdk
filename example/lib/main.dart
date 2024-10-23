@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'dart:ffi';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+//import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:verloop_flutter_sdk_example/screens/login-screen/login_screen.dart';
 import 'firebase_options.dart';
@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(useMaterial3: true),
+      
       debugShowCheckedModeBanner: true,
       home: const LoginScreen(),
     );
