@@ -73,6 +73,26 @@ class MethodChannelVerloopFlutterSdk extends VerloopFlutterSdkPlatform {
   }
 
   @override
+  Future<void> openMenuWidget() async {
+    try {
+      await verloopMethods.invokeMethod('openMenuWidget');
+    } on PlatformException catch (e) {
+      log("Failed to load widget: '${e.message}'.");
+    }
+  }
+
+  @override
+  Future<void> showDownloadButton({bool isAllowFileDownload = false}) async {
+    try {
+      await verloopMethods.invokeMethod('showDownloadButton', <String, dynamic>{
+        'isAllowFileDownload': isAllowFileDownload,
+      });
+    } on PlatformException catch (e) {
+      log("Failed to set url click listener: '${e.message}'.");
+    }
+  }
+
+  @override
   Future<void> buildVerloop() async {
     try {
       await verloopMethods.invokeMethod('buildVerloop');
@@ -118,6 +138,15 @@ class MethodChannelVerloopFlutterSdk extends VerloopFlutterSdkPlatform {
       await verloopMethods.invokeMethod('dispose');
     } on PlatformException catch (e) {
       log("Failed to dispose widget: '${e.message}'.");
+    }
+  }
+
+  @override
+  Future<void> dismissChat() async {
+    try {
+      await verloopMethods.invokeMethod('dismissChat');
+    } on PlatformException catch (e) {
+      log("Failed to load widget: '${e.message}'.");
     }
   }
 }

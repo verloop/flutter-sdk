@@ -5,6 +5,8 @@ import VerloopSDKiOS
 public class SwiftVerloopFlutterSdkPlugin: NSObject, FlutterPlugin, VLEventDelegate {
   private var previousWindow: UIWindow? = nil
   private var window = UIWindow()
+    
+  private var viewController: UIViewController?
 
   private static var methodChannel = "verloop.flutter.dev/method-call"
   private static var buttonClickChannel = "verloop.flutter.dev/events/button-click"
@@ -26,6 +28,7 @@ public class SwiftVerloopFlutterSdkPlugin: NSObject, FlutterPlugin, VLEventDeleg
     let channel = FlutterMethodChannel(name: methodChannel, binaryMessenger: registrar.messenger())
     let buttonChannel = FlutterEventChannel(name: buttonClickChannel, binaryMessenger: registrar.messenger())
     let urlChannel = FlutterEventChannel(name: urlClickChannel, binaryMessenger: registrar.messenger())
+    
 
     let instance = SwiftVerloopFlutterSdkPlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)
@@ -111,7 +114,7 @@ public class SwiftVerloopFlutterSdkPlugin: NSObject, FlutterPlugin, VLEventDeleg
             result(1)
         case "setUrlClickListener":
             if let args = call.arguments as? Dictionary<String, Any> {
-                var overrideUrl = args["OVERRIDE_URL"] as? Bool
+                let overrideUrl = args["OVERRIDE_URL"] as? Bool
                 if overrideUrl != nil {
                     config?.setUrlRedirectionFlag(canRedirect: !overrideUrl!)               // if you wish to open the url in a browser, then keep it as false
                 }
@@ -120,6 +123,17 @@ public class SwiftVerloopFlutterSdkPlugin: NSObject, FlutterPlugin, VLEventDeleg
                 SwiftVerloopFlutterSdkPlugin.urlHandler?.urlClicked(url: url)
                 return;
             })
+            result(1)
+        case "showDownloadButton":
+            if let args = call.arguments as? Dictionary<String, Any> {
+                let isAllowFileDownload = args["isAllowFileDownload"] as? Bool
+                if isAllowFileDownload != nil {
+                    config?.showDownloadButton(isAllowFileDownload ?? false)
+                }
+            }
+            result(1)
+        case "openMenuWidget":
+            config?.openMenuWidget()
             result(1)
         case "buildVerloop":
             if config == nil {
@@ -137,14 +151,16 @@ public class SwiftVerloopFlutterSdkPlugin: NSObject, FlutterPlugin, VLEventDeleg
                                          details: "call buildVerloop before calling showChat"))
                 return
             }
-            previousWindow = UIApplication.shared.keyWindow
-            window.isOpaque = true
-//             window.backgroundColor = UIColor.white
-//             window.frame = UIScreen.main.bounds
-
-            window.windowLevel = UIWindow.Level.normal + 1
-            window.rootViewController = verloop!.getNavController()
-            window.makeKeyAndVisible()
+//           previousWindow = UIApplication.shared.keyWindow
+//           window.isOpaque = true
+//           window.windowLevel = UIWindow.Level.normal + 1
+           //window.rootViewController = verloop!.getNavController()
+           //window.makeKeyAndVisible()
+            viewController = verloop!.getNavController()
+        if let rootVC = UIApplication.shared.delegate?.window??.rootViewController {
+            rootVC.present(viewController!, animated: true, completion: nil)
+        }
+        
        case "dispose":
             verloop = nil
             clientId = nil
@@ -152,6 +168,11 @@ public class SwiftVerloopFlutterSdkPlugin: NSObject, FlutterPlugin, VLEventDeleg
             config?.setButtonOnClickListener(onButtonClicked: nil)
             config = nil
             return
+
+        case "dismissChat":
+            self.viewController?.dismiss(animated: true, completion: {
+                self.viewController = nil // Clear the reference after dismissing
+            })
         default:
             result(FlutterMethodNotImplemented)
     }

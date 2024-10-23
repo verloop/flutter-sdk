@@ -45,8 +45,17 @@ abstract class VerloopFlutterSdkPlatform extends PlatformInterface {
         'setButtonClickListener() has not been implemented.');
   }
 
+  Future<void> openMenuWidget() async {
+    throw UnimplementedError(
+        'openMenuWidget() has not been implemented.');
+  }
+
   Future<void> setUrlClickListener({bool overrideUrlOnClick = false}) async {
     throw UnimplementedError('setUrlClickListener() has not been implemented.');
+  } 
+
+  Future<void> showDownloadButton({bool isAllowFileDownload = false}) async {
+    throw UnimplementedError('showDownloadButton() has not been implemented.');
   }
 
   Future<void> buildVerloop() async {
@@ -68,4 +77,9 @@ abstract class VerloopFlutterSdkPlatform extends PlatformInterface {
   Future<void> dispose() async {
     throw UnimplementedError('dispose() has not been implemented.');
   }
+
+  Future<void> dismissChat() async {
+    throw UnimplementedError('dismissChat() has not been implemented.');
+  }
+  
 }
