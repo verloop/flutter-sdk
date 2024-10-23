@@ -234,6 +234,28 @@ class VerloopFlutterSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware 
                 result.success(1)
                 return
             }
+            "showDownloadButton" -> {
+              val args = call.arguments as? Map<String, Any>
+                if (args != null) {
+                    val isAllowFileDownload = args["isAllowFileDownload"] as? Boolean
+                if (isAllowFileDownload != null) {
+                    if (configBuilder != null) {
+                        configBuilder =
+                        configBuilder!!.allowFileDownload(isAllowFileDownload)
+                    }
+                  }
+                }
+                result.success(1)
+                return
+            }
+            "openMenuWidget" -> {
+                if (configBuilder != null) {
+                    configBuilder =
+                    configBuilder!!.openMenuWidgetOnStart(true)
+                }
+                result.success(1)
+                return
+            }        
             "buildVerloop" -> {
                 if (configBuilder == null) {
                     configBuilder = VerloopConfig.Builder()
@@ -276,6 +298,12 @@ class VerloopFlutterSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware 
                     return
                 }
                 verloop!!.showChat()
+                
+                result.success(1)
+                return
+            }
+            "dismissChat" -> {
+                activity.finish() // Dismiss the activity
                 result.success(1)
                 return
             }

@@ -133,7 +133,7 @@ public class SwiftVerloopFlutterSdkPlugin: NSObject, FlutterPlugin, VLEventDeleg
             }
             result(1)
         case "openMenuWidget":
-           config?.openMenuWidget()
+            config?.openMenuWidget()
             result(1)
         case "buildVerloop":
             if config == nil {
