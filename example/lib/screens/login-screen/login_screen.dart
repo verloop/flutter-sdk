@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:verloop_flutter_sdk/verloop_flutter_sdk.dart';
 import 'package:verloop_flutter_sdk_example/screens/home_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -168,17 +170,28 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         floatingActionButton: changed == true
             ? const SizedBox()
-            : VerloopWidget(
-                clientId: clientId,
-                // fcmToken: token,
-                // recipeId: recipeId,
-                // roomVariables: roomMap,
-                // userVariables: userMap,
-                // userId: userId,
-                // userName: userName,
-                // userEmail: userEmail,
-                // userPhone: userPhone,
-                onButtonClicked:
+            : FutureBuilder<String?>(
+            // Initialize FlutterFire
+            future: FirebaseMessaging.instance.getToken(),
+            builder: (context, snapshot) {
+              // Check for errors
+              if (snapshot.hasError) {
+                return const Text("Something went wrong");
+              }
+              if (snapshot.hasData && snapshot.data != "") {
+                String token = snapshot.data ?? "";
+        
+                return VerloopWidget(
+                  clientId: clientId,
+                  fcmToken: token,
+                  recipeId: recipeId,
+                  roomVariables: roomMap,
+                  userVariables: userMap,
+                  userId: userId,
+                  userName: userName,
+                  userEmail: userEmail,
+                  userPhone: userPhone,
+                                  onButtonClicked:
                     (String? title, String? payload, String? type) {
                   log("button click title $title $payload");
                   verloop.dismissChat();
@@ -204,50 +217,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         (Route<dynamic> route) => route.isFirst);
                   }
                 },
-                overrideUrlOnClick: true,
-                child: const FloatingActionButton(
-                  onPressed: null,
-                  child: Icon(Icons.chat),
-                ),
-              )
-        // : FutureBuilder<String?>(
-        //     // Initialize FlutterFire
-        //     future: FirebaseMessaging.instance.getToken(),
-        //     builder: (context, snapshot) {
-        //       // Check for errors
-        //       if (snapshot.hasError) {
-        //         return const Text("Something went wrong");
-        //       }
-        //       if (snapshot.hasData && snapshot.data != "") {
-        //         String token = snapshot.data ?? "";
-        //
-        //         return VerloopWidget(
-        //           clientId: clientId,
-        //           fcmToken: token,
-        //           recipeId: recipeId,
-        //           roomVariables: roomMap,
-        //           userVariables: userMap,
-        //           userId: userId,
-        //           userName: userName,
-        //           userEmail: userEmail,
-        //           userPhone: userPhone,
-        //           onButtonClicked:
-        //               (String? title, String? payload, String? type) {
-        //             log("button click title $title $payload");
-        //           },
-        //           onUrlClicked: (String? url) {
-        //             log("url clicked $url");
-        //           },
-        //           overrideUrlOnClick: true,
-        //           child: const FloatingActionButton(
-        //             onPressed: null,
-        //             child: Icon(Icons.chat),
-        //           ),
-        //         );
-        //       }
-        //       return const Text("Loading...");
-        //     },
-        //   ),
+                  overrideUrlOnClick: true,
+                  child: const FloatingActionButton(
+                    onPressed: null,
+                    child: Icon(Icons.chat),
+                  ),
+                );
+              }
+              return const Text("Loading...");
+            },
+          ),
         );
   }
 
