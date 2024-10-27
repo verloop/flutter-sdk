@@ -193,33 +193,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   userPhone: userPhone,
                   showDownloadButton: true,
                   openMenuWidget:true,
-                  onButtonClicked:
-                    (String? title, String? payload, String? type) {
-                  log("button click title $title $payload");
-                  verloop.dismissChat();
-                  if (payload != null) {
-                       // verloop.dismissChat();
-                        Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(
-                                builder: (context) => HomeScreen(
-                                      title: title,
-                                      payload: payload,
-                                      type: type,
-                                    )),
-                            (Route<dynamic> route) => route.isFirst);
-                      }
-                },
-                onUrlClicked: (String? url) {
-                  log("url clicked $url");
-                  if (url != null) {
-                        //verloop.dismissChat();
-                        // Pop Verloop and remove all routes until the initial route
-                        Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(
-                                builder: (context) => HomeScreen(title: url)),
-                            (Route<dynamic> route) => route.isFirst);
-                      }
-                },
+                  onButtonClicked:_handleButtonClick,
+                  onUrlClicked: _handleUrlClick,
                   overrideUrlOnClick: true,
                   child: const FloatingActionButton(
                     onPressed: null,
@@ -231,6 +206,32 @@ class _LoginScreenState extends State<LoginScreen> {
             },
           ),
         );
+  }
+
+  void _handleButtonClick(String? title, String? payload, String? type) async {
+    log("button click title $title $payload");
+    if (payload != null) {
+      verloop.dismissChat();
+      Navigator.of(context).push(
+        MaterialPageRoute(
+            builder: (context) => HomeScreen(
+              title: title,
+              payload: payload,
+              type: type,
+            )),
+      );
+    }
+  }
+
+  void _handleUrlClick(String? url) {
+    log("url clicked $url");
+    if (url != null) {
+      //verloop.dismissChat();
+      // Pop Verloop and remove all routes until the initial route
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => HomeScreen(title: url)),
+              (Route<dynamic> route) => route.isFirst);
+    }
   }
 
   @override
