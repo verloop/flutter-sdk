@@ -1,8 +1,7 @@
 package io.verloop.verloop_flutter_sdk
 
 import android.app.Activity
-import android.util.Log
-import android.view.inputmethod.InputBinding
+import android.content.Intent
 import androidx.annotation.NonNull
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
@@ -11,11 +10,12 @@ import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
-import io.flutter.plugin.common.MethodChannel.Result
 import io.verloop.sdk.LiveChatButtonClickListener
 import io.verloop.sdk.LiveChatUrlClickListener
 import io.verloop.sdk.Verloop
 import io.verloop.sdk.VerloopConfig
+import io.verloop.sdk.ui.Constants
+
 
 /** VerloopFlutterSdkPlugin */
 class VerloopFlutterSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
@@ -303,7 +303,8 @@ class VerloopFlutterSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware 
                 return
             }
             "dismissChat" -> {
-                activity.finish() // Dismiss the activity
+                val intent = Intent(Constants.ACTION_CLOSE_VERLOOP_WIDGET)
+                activity.sendBroadcast(intent)
                 result.success(1)
                 return
             }
