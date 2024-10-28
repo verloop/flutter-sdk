@@ -42,7 +42,7 @@ public class SwiftVerloopFlutterSdkPlugin: NSObject, FlutterPlugin, VLEventDeleg
     switch call.method {
         case "setConfig":
             if let args = call.arguments as? Dictionary<String, Any> {
-                var clientId = args["CLIENT_ID"] as? String
+                let clientId = args["CLIENT_ID"] as? String
                 if clientId == nil || clientId == "" {
                     result(FlutterError.init(code: SwiftVerloopFlutterSdkPlugin.ERROR_102,
                                                          message: "CLIENT_ID missing",
@@ -51,49 +51,49 @@ public class SwiftVerloopFlutterSdkPlugin: NSObject, FlutterPlugin, VLEventDeleg
                 }
                 config = VLConfig(clientId: clientId!)
 
-                var userId = args["USER_ID"] as? String
+                let userId = args["USER_ID"] as? String
                 if userId != nil && userId != "" {
                     config?.setUserId(userId: userId!)
                 }
 
-                var fcmToken = args["FCM_TOKEN"] as? String
+                let fcmToken = args["FCM_TOKEN"] as? String
                 if fcmToken != nil && fcmToken != "" {
                     config?.setNotificationToken(notificationToken: fcmToken!)               // If you wish to get notifications, else, skip this
                 }
 
-                var recipeId = args["RECIPE_ID"] as? String
+                let recipeId = args["RECIPE_ID"] as? String
                 if recipeId != nil && recipeId != "" {
                     config?.setRecipeId(recipeId: recipeId!)               // In case you want to use default recipe, skip this
                 }
 
-                var userName = args["USER_NAME"] as? String
+                let userName = args["USER_NAME"] as? String
                 if userName != nil && userName != "" {
                     config?.setUserName(userName: userName!)               // If guest name variable is a part of the recipe, or the value is not required, skip this
                 }
 
-                var userEmail = args["USER_EMAIL"] as? String
+                let userEmail = args["USER_EMAIL"] as? String
                 if userEmail != nil && userEmail != "" {
                     config?.setUserEmail(userEmail: userEmail!)               // If email variable is a part of the recipe, or the value is not required, skip this
                 }
 
-                var userPhone = args["USER_PHONE"] as? String
+                let userPhone = args["USER_PHONE"] as? String
                 if userPhone != nil && userPhone != "" {
                     config?.setUserPhone(userPhone: userPhone!)               // If phone variable is a part of the recipe, or the value is not required, skip this
                 }
 
-                var isStaging = args["IS_STAGING"] as? Bool
+                let isStaging = args["IS_STAGING"] as? Bool
                 if isStaging != nil {
                     config?.setStaging(isStaging: isStaging!)               // Keep this as true if you want to access <client_id>.stage.verloop.io account. If the account doesn't exist, keep it as false or skip it
                 }
 
-                var customFields = args["ROOM_CUSTOM_FIELDS"] as? Dictionary<String, String>  // These are predefined variables added on room level
+                let customFields = args["ROOM_CUSTOM_FIELDS"] as? Dictionary<String, String>  // These are predefined variables added on room level
                 if customFields != nil {
                   for (key, value) in customFields! {
                     config?.putCustomField(key: key, value: value, scope: VLConfig.SCOPE.ROOM)
                   }
                 }
 
-                var userCustomFields = args["USER_CUSTOM_FIELDS"] as? Dictionary<String, String>  // These are predefined variables added on user level
+                let userCustomFields = args["USER_CUSTOM_FIELDS"] as? Dictionary<String, String>  // These are predefined variables added on user level
                 if userCustomFields != nil {
                   for (key, value) in userCustomFields! {
                     config?.putCustomField(key: key, value: value, scope: VLConfig.SCOPE.USER)
@@ -160,7 +160,7 @@ public class SwiftVerloopFlutterSdkPlugin: NSObject, FlutterPlugin, VLEventDeleg
         if let rootVC = UIApplication.shared.delegate?.window??.rootViewController {
             rootVC.present(viewController!, animated: true, completion: nil)
         }
-        
+        result(1)
        case "dispose":
             verloop = nil
             clientId = nil
@@ -173,6 +173,7 @@ public class SwiftVerloopFlutterSdkPlugin: NSObject, FlutterPlugin, VLEventDeleg
             self.viewController?.dismiss(animated: true, completion: {
                 self.viewController = nil // Clear the reference after dismissing
             })
+            result(1)
         default:
             result(FlutterMethodNotImplemented)
     }
