@@ -164,6 +164,7 @@ class VerloopFlutterSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware 
                 result.success(1)
                 return
             }
+
             "setButtonClickListener" -> {
                 if (configBuilder == null) {
                     configBuilder = VerloopConfig.Builder()
@@ -196,6 +197,7 @@ class VerloopFlutterSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware 
                 result.success(1)
                 return
             }
+
             "setUrlClickListener" -> {
                 if (configBuilder == null) {
                     configBuilder = VerloopConfig.Builder()
@@ -234,46 +236,57 @@ class VerloopFlutterSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware 
                 result.success(1)
                 return
             }
+
             "showDownloadButton" -> {
-              val args = call.arguments as? Map<String, Any>
-                if (args != null) {
-                    val isAllowFileDownload = args["isAllowFileDownload"] as? Boolean
-                if (isAllowFileDownload != null) {
-                    if (configBuilder != null) {
-                        configBuilder =
-                        configBuilder!!.allowFileDownload(isAllowFileDownload)
-                    }
-                  }
+                if (configBuilder == null) {
+                    configBuilder = VerloopConfig.Builder()
                 }
-                result.success(1)
-                return
-            }
-            "openMenuWidget" -> {
-                if (configBuilder != null) {
-                    configBuilder =
-                    configBuilder!!.openMenuWidgetOnStart(true)
-                }
-                result.success(1)
-                return
-            } 
-            "setHeaderConfig" -> {
                 val args = call.arguments as? Map<String, Any>
                 if (args != null) {
-                    val widgetTitle = args["title"] as? String?:"Verloop Local"
-                    val widgetColor = args["widgetColor"] as? String?:"#FFFFFF"
-                    if (configBuilder != null) {
+                    val isAllowFileDownload = args["isAllowFileDownload"] as? Boolean
+                    if (isAllowFileDownload != null) {
                         configBuilder =
-                        configBuilder!!.headerConfig(
-                            HeaderConfig.Builder()
-                                .title(widgetTitle)
-                                .backgroundColor(widgetColor)
-                                .build())
-                  }
+                            configBuilder!!.allowFileDownload(isAllowFileDownload)
+                    }
                 }
                 result.success(1)
                 return
             }
-           
+
+            "openMenuWidget" -> {
+                if (configBuilder == null) {
+                    configBuilder = VerloopConfig.Builder()
+                }
+                configBuilder =
+                    configBuilder!!.openMenuWidgetOnStart(true)
+                result.success(1)
+                return
+            }
+
+            "setHeaderConfig" -> {
+                if (configBuilder == null) {
+                    configBuilder = VerloopConfig.Builder()
+                }
+                val args = call.arguments as? Map<String, Any>
+                if (args != null) {
+                    val headerConfigBuilder = HeaderConfig.Builder()
+                    val widgetTitle = args["title"] as? String?
+                    if (!widgetTitle.isNullOrBlank()) {
+                        headerConfigBuilder.title(widgetTitle)
+                    }
+                    val widgetColor = args["widgetColor"] as? String?
+                    if (!widgetColor.isNullOrBlank()) {
+                        headerConfigBuilder.backgroundColor(widgetColor)
+                    }
+                    configBuilder =
+                        configBuilder!!.headerConfig(
+                            headerConfigBuilder.build()
+                        )
+                }
+                result.success(1)
+                return
+            }
+
             "buildVerloop" -> {
                 if (configBuilder == null) {
                     configBuilder = VerloopConfig.Builder()
@@ -306,6 +319,7 @@ class VerloopFlutterSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware 
                 result.success(1)
                 return
             }
+
             "showChat" -> {
                 if (verloop == null) {
                     result.error(
@@ -316,16 +330,18 @@ class VerloopFlutterSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware 
                     return
                 }
                 verloop!!.showChat()
-                
+
                 result.success(1)
                 return
             }
+
             "dismissChat" -> {
                 val intent = Intent(Constants.ACTION_CLOSE_VERLOOP_WIDGET)
                 activity.sendBroadcast(intent)
                 result.success(1)
                 return
             }
+
             "dispose" -> {
                 verloop = null
                 configBuilder = null
@@ -337,6 +353,7 @@ class VerloopFlutterSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware 
                 urlCallbackChannel.setStreamHandler(urlClickHandler)
                 return
             }
+
             else -> {
                 result.notImplemented()
             }
