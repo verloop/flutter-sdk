@@ -7,6 +7,14 @@ import 'button_click_values.dart';
 import 'url_click_values.dart';
 import 'verloop_flutter_sdk_platform_interface.dart';
 
+class VerloopHeaderConfig {
+  final String? title;
+  final Color? widgetColor;
+
+  VerloopHeaderConfig(
+      {this.title = "", this.widgetColor = const Color.fromARGB(255, 66, 165, 245)});
+}
+
 class VerloopWidget extends StatefulWidget {
   final String clientId;
   final String? userId;
@@ -25,6 +33,9 @@ class VerloopWidget extends StatefulWidget {
   final Map<String, String>? userVariables;
   final Map<String, String>? roomVariables;
   final bool? openMenuWidget;
+  final VerloopHeaderConfig? headerConfig;
+  // final String setTitle;
+  // final Color setWidgetColor;
 
   const VerloopWidget(
       {Key? key,
@@ -41,6 +52,7 @@ class VerloopWidget extends StatefulWidget {
       this.onButtonClicked,
       this.onUrlClicked,
       this.openMenuWidget,
+      this.headerConfig,
       this.showDownloadButton = false,
       this.overrideUrlOnClick = false})
       : super(key: key);
@@ -95,6 +107,8 @@ class _VerloopWidgetState extends State<VerloopWidget> {
     if (widget.openMenuWidget == true) {
       sdk?.openMenuWidget();
     }
+
+    sdk?.setHeaderConfig(headerConfig: widget.headerConfig);
 
     setState(() {
       _ready = true;
@@ -155,6 +169,11 @@ class VerloopSdk {
     return await VerloopFlutterSdkPlatform.instance.openMenuWidget();
   }
 
+  Future<void> setHeaderConfig({VerloopHeaderConfig? headerConfig}) async {
+    return await VerloopFlutterSdkPlatform.instance
+        .setHeaderConfig(headerConfig: headerConfig);
+  }
+
   Future<void> showDownloadButton({bool isAllowFileDownload = false}) async {
     return await VerloopFlutterSdkPlatform.instance
         .showDownloadButton(isAllowFileDownload: isAllowFileDownload);
@@ -188,5 +207,4 @@ class VerloopSdk {
   Future<void> dismissChat() async {
     return await VerloopFlutterSdkPlatform.instance.dismissChat();
   }
-
 }

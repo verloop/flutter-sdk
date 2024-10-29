@@ -1,4 +1,8 @@
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+import 'package:verloop_flutter_sdk/verloop_flutter_sdk.dart';
 
 import 'verloop_flutter_sdk_method_channel.dart';
 
@@ -56,6 +60,10 @@ abstract class VerloopFlutterSdkPlatform extends PlatformInterface {
 
   Future<void> showDownloadButton({bool isAllowFileDownload = false}) async {
     throw UnimplementedError('showDownloadButton() has not been implemented.');
+  }
+
+  Future<void> setHeaderConfig({VerloopHeaderConfig? headerConfig}) async {
+    throw UnimplementedError('setHeaderConfig() has not been implemented.');
   }
 
   Future<void> buildVerloop() async {

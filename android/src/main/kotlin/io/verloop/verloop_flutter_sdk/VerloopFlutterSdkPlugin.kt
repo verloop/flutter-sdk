@@ -15,6 +15,7 @@ import io.verloop.sdk.LiveChatUrlClickListener
 import io.verloop.sdk.Verloop
 import io.verloop.sdk.VerloopConfig
 import io.verloop.sdk.ui.Constants
+import io.verloop.sdk.model.HeaderConfig
 
 
 /** VerloopFlutterSdkPlugin */
@@ -160,7 +161,6 @@ class VerloopFlutterSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware 
                     configBuilder =
                         configBuilder!!.fields(fields)               // These are predefined variables
                 }
-
                 result.success(1)
                 return
             }
@@ -255,7 +255,25 @@ class VerloopFlutterSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware 
                 }
                 result.success(1)
                 return
-            }        
+            } 
+            "setHeaderConfig" -> {
+                val args = call.arguments as? Map<String, Any>
+                if (args != null) {
+                    val widgetTitle = args["title"] as? String?:"Verloop Local"
+                    val widgetColor = args["widgetColor"] as? String?:"#FFFFFF"
+                    if (configBuilder != null) {
+                        configBuilder =
+                        configBuilder!!.headerConfig(
+                            HeaderConfig.Builder()
+                                .title(widgetTitle)
+                                .backgroundColor(widgetColor)
+                                .build())
+                  }
+                }
+                result.success(1)
+                return
+            }
+           
             "buildVerloop" -> {
                 if (configBuilder == null) {
                     configBuilder = VerloopConfig.Builder()

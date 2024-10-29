@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:verloop_flutter_sdk/verloop_flutter_sdk.dart';
 
 import 'url_click_values.dart';
 import 'button_click_values.dart';
@@ -92,6 +94,20 @@ class MethodChannelVerloopFlutterSdk extends VerloopFlutterSdkPlatform {
     }
   }
 
+  @override
+  Future<void> setHeaderConfig({VerloopHeaderConfig? headerConfig}) async {
+    try {
+      String? hexColor = headerConfig?.widgetColor?.toString().substring(6, 14);
+      await verloopMethods.invokeMethod('setHeaderConfig', <String, dynamic>{
+        'title': headerConfig?.title,
+        'widgetColor': hexColor,
+      });
+    } on PlatformException catch (e) {
+      log("Failed to setHeaderConfig: '${e.message}'.");
+    }
+  }
+
+  
   @override
   Future<void> buildVerloop() async {
     try {

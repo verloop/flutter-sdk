@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:verloop_flutter_sdk/verloop_flutter_sdk.dart';
@@ -30,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final userPhoneController = TextEditingController();
   bool changed = true;
   final VerloopSdk verloop = VerloopSdk();
-
+final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
   @override
   void initState() {
@@ -172,7 +173,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ? const SizedBox()
             : FutureBuilder<String?>(
             // Initialize FlutterFire
-            future: FirebaseMessaging.instance.getToken(),
+            future: getTokenByDevice(),
             builder: (context, snapshot) {
               // Check for errors
               if (snapshot.hasError) {
@@ -193,6 +194,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   userPhone: userPhone,
                   showDownloadButton: true,
                   openMenuWidget:true,
+                  headerConfig: VerloopHeaderConfig(title: "my test",widgetColor: const Color.fromARGB(255, 66, 165, 245)),
                   onButtonClicked:_handleButtonClick,
                   onUrlClicked: _handleUrlClick,
                   overrideUrlOnClick: true,
@@ -232,6 +234,26 @@ class _LoginScreenState extends State<LoginScreen> {
           MaterialPageRoute(builder: (context) => HomeScreen(title: url)),
               (Route<dynamic> route) => route.isFirst);
     }
+  }
+
+    Future<String?> getTokenByDevice() async {
+    String? token;
+    if (Platform.isIOS) {
+      // On iOS/MacOS, it is possible to get the users APNs token.
+      // This may be required if you want to send messages to your iOS/MacOS devices without using the FCM service.
+      // On Android & web, this returns null.
+
+      await firebaseMessaging.requestPermission(
+        provisional: true,
+      );
+      token = await firebaseMessaging
+          .getAPNSToken(); // It will generate the Token for only iOS side.
+    } else {
+      // Android Returns the default FCM token for this device.
+      token = await firebaseMessaging
+          .getToken(); // It will generate the Token for only Android side.
+    }
+    return token;
   }
 
   @override
