@@ -97,16 +97,19 @@ class MethodChannelVerloopFlutterSdk extends VerloopFlutterSdkPlatform {
   @override
   Future<void> setHeaderConfig({VerloopHeaderConfig? headerConfig}) async {
     try {
-      String? hexColor = headerConfig?.widgetColor?.toString().substring(6, 14);
+     
       await verloopMethods.invokeMethod('setHeaderConfig', <String, dynamic>{
         'title': headerConfig?.title,
-        'widgetColor': hexColor,
+        'widgetColor': colorToHex(headerConfig?.widgetColor ?? const Color.fromARGB(255, 66, 165, 245)),
       });
     } on PlatformException catch (e) {
       log("Failed to setHeaderConfig: '${e.message}'.");
     }
   }
 
+  String colorToHex(Color color) {
+    return '#${color.value.toRadixString(16).padLeft(8, '0')}';
+  }
   
   @override
   Future<void> buildVerloop() async {
