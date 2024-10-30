@@ -269,14 +269,14 @@ class VerloopFlutterSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware 
                 }
                 val args = call.arguments as? Map<String, Any>
                 if (args != null) {
-                    val headerConfigBuilder = HeaderConfig.Builder()
+                    var headerConfigBuilder = HeaderConfig.Builder()
                     val widgetTitle = args["title"] as? String?
                     if (!widgetTitle.isNullOrBlank()) {
-                        headerConfigBuilder.title(widgetTitle)
+                        headerConfigBuilder = headerConfigBuilder.title(widgetTitle)
                     }
                     val widgetColor = args["widgetColor"] as? String?
                     if (!widgetColor.isNullOrBlank()) {
-                        headerConfigBuilder.backgroundColor(widgetColor)
+                        headerConfigBuilder = headerConfigBuilder.backgroundColor(widgetColor)
                     }
                     configBuilder =
                         configBuilder!!.headerConfig(
