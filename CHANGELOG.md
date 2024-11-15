@@ -1,3 +1,10 @@
+## 0.1.0
+
+* Upgraded Andorid sdk version
+* Upgraded iOS sdk version
+* Added missing methods showDownloadButton, openMenuWidget, headerConfig
+* Fixed issue with button click lister to move to different widget
+  
 ## 0.0.9
 
 * Upgraded Andorid sdk version
