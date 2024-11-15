@@ -1,6 +1,6 @@
 name: verloop_flutter_sdk
 description: Verloop SDK wrapper for Android and iOS.This would help the existing clients of verloop in adding chat functionalities to their flutter app.
-version: 0.0.9
+version: 0.1.0
 repository: https://github.com/verloop/flutter-sdk
 
 environment:
