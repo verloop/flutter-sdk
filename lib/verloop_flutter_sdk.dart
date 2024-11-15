@@ -7,6 +7,14 @@ import 'button_click_values.dart';
 import 'url_click_values.dart';
 import 'verloop_flutter_sdk_platform_interface.dart';
 
+class VerloopHeaderConfig {
+  final String? title;
+  final Color? widgetColor;
+
+  VerloopHeaderConfig(
+      {this.title = "", this.widgetColor = const Color.fromARGB(255, 66, 165, 245)});
+}
+
 class VerloopWidget extends StatefulWidget {
   final String clientId;
   final String? userId;
@@ -16,6 +24,7 @@ class VerloopWidget extends StatefulWidget {
   final String? userEmail;
   final String? userPhone;
   final bool overrideUrlOnClick;
+  final bool showDownloadButton;
   final Widget? child;
 
   final Function(String? title, String? payload, String? type)? onButtonClicked;
@@ -23,6 +32,10 @@ class VerloopWidget extends StatefulWidget {
 
   final Map<String, String>? userVariables;
   final Map<String, String>? roomVariables;
+  final bool? openMenuWidget;
+  final VerloopHeaderConfig? headerConfig;
+  // final String setTitle;
+  // final Color setWidgetColor;
 
   const VerloopWidget(
       {Key? key,
@@ -38,6 +51,9 @@ class VerloopWidget extends StatefulWidget {
       this.roomVariables,
       this.onButtonClicked,
       this.onUrlClicked,
+      this.openMenuWidget,
+      this.headerConfig,
+      this.showDownloadButton = false,
       this.overrideUrlOnClick = false})
       : super(key: key);
 
@@ -79,6 +95,7 @@ class _VerloopWidgetState extends State<VerloopWidget> {
     );
     sdk?.setButtonClickListener();
     sdk?.setUrlClickListener(overrideUrlOnClick: widget.overrideUrlOnClick);
+    sdk?.showDownloadButton(isAllowFileDownload: widget.showDownloadButton);
     sdk?.buildVerloop();
     sdk?.onButtonClicked.listen((event) {
       widget.onButtonClicked?.call(event.title, event.payload, event.type);
@@ -86,6 +103,13 @@ class _VerloopWidgetState extends State<VerloopWidget> {
     sdk?.onUrlClicked.listen((event) {
       widget.onUrlClicked?.call(event.url);
     });
+
+    if (widget.openMenuWidget == true) {
+      sdk?.openMenuWidget();
+    }
+
+    sdk?.setHeaderConfig(headerConfig: widget.headerConfig);
+
     setState(() {
       _ready = true;
     });
@@ -141,6 +165,20 @@ class VerloopSdk {
     return await VerloopFlutterSdkPlatform.instance.setButtonClickListener();
   }
 
+  Future<void> openMenuWidget() async {
+    return await VerloopFlutterSdkPlatform.instance.openMenuWidget();
+  }
+
+  Future<void> setHeaderConfig({VerloopHeaderConfig? headerConfig}) async {
+    return await VerloopFlutterSdkPlatform.instance
+        .setHeaderConfig(headerConfig: headerConfig);
+  }
+
+  Future<void> showDownloadButton({bool isAllowFileDownload = false}) async {
+    return await VerloopFlutterSdkPlatform.instance
+        .showDownloadButton(isAllowFileDownload: isAllowFileDownload);
+  }
+
   Future<void> setUrlClickListener({bool overrideUrlOnClick = false}) async {
     return await VerloopFlutterSdkPlatform.instance
         .setUrlClickListener(overrideUrlOnClick: overrideUrlOnClick);
@@ -164,5 +202,9 @@ class VerloopSdk {
 
   Future<void> dispose() async {
     return await VerloopFlutterSdkPlatform.instance.dispose();
+  }
+
+  Future<void> dismissChat() async {
+    return await VerloopFlutterSdkPlatform.instance.dismissChat();
   }
 }

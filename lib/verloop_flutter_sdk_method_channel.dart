@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:verloop_flutter_sdk/verloop_flutter_sdk.dart';
 
 import 'url_click_values.dart';
 import 'button_click_values.dart';
@@ -73,6 +75,43 @@ class MethodChannelVerloopFlutterSdk extends VerloopFlutterSdkPlatform {
   }
 
   @override
+  Future<void> openMenuWidget() async {
+    try {
+      await verloopMethods.invokeMethod('openMenuWidget');
+    } on PlatformException catch (e) {
+      log("Failed to load widget: '${e.message}'.");
+    }
+  }
+
+  @override
+  Future<void> showDownloadButton({bool isAllowFileDownload = false}) async {
+    try {
+      await verloopMethods.invokeMethod('showDownloadButton', <String, dynamic>{
+        'isAllowFileDownload': isAllowFileDownload,
+      });
+    } on PlatformException catch (e) {
+      log("Failed to set url click listener: '${e.message}'.");
+    }
+  }
+
+  @override
+  Future<void> setHeaderConfig({VerloopHeaderConfig? headerConfig}) async {
+    try {
+     
+      await verloopMethods.invokeMethod('setHeaderConfig', <String, dynamic>{
+        'title': headerConfig?.title,
+        'widgetColor': colorToHex(headerConfig?.widgetColor ?? const Color.fromARGB(255, 66, 165, 245)),
+      });
+    } on PlatformException catch (e) {
+      log("Failed to setHeaderConfig: '${e.message}'.");
+    }
+  }
+
+  String colorToHex(Color color) {
+    return '#${color.value.toRadixString(16).padLeft(8, '0')}';
+  }
+  
+  @override
   Future<void> buildVerloop() async {
     try {
       await verloopMethods.invokeMethod('buildVerloop');
@@ -118,6 +157,15 @@ class MethodChannelVerloopFlutterSdk extends VerloopFlutterSdkPlatform {
       await verloopMethods.invokeMethod('dispose');
     } on PlatformException catch (e) {
       log("Failed to dispose widget: '${e.message}'.");
+    }
+  }
+
+  @override
+  Future<void> dismissChat() async {
+    try {
+      await verloopMethods.invokeMethod('dismissChat');
+    } on PlatformException catch (e) {
+      log("Failed to load widget: '${e.message}'.");
     }
   }
 }
