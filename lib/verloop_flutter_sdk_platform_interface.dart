@@ -90,4 +90,11 @@ abstract class VerloopFlutterSdkPlatform extends PlatformInterface {
     throw UnimplementedError('dismissChat() has not been implemented.');
   }
   
+  Future<void> logout() async {
+    throw UnimplementedError('logout() has not been implemented.');
+  }
+
+  Future<void> closeChat() async {
+    throw UnimplementedError('closeChat() has not been implemented.');
+  }
 }

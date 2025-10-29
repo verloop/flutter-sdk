@@ -354,6 +354,42 @@ class VerloopFlutterSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware 
                 return
             }
 
+            "logout" -> {
+                if (verloop == null) {
+                    result.error(
+                        ERROR_101,
+                        "verloop object null",
+                        "buildVerloop is not called before calling logout"
+                    )
+                    return
+                }
+                verloop!!.logout()
+                configBuilder = null
+                verloop = null
+                config = null
+                clientId = null
+                buttonClickHandler = ButtonClickHandler()
+                buttonCallbackChannel.setStreamHandler(buttonClickHandler)
+                urlClickHandler = UrlClickHandler()
+                urlCallbackChannel.setStreamHandler(urlClickHandler)
+                result.success(1)
+                return
+            }
+
+            "closeChat" -> {
+                if (verloop == null) {
+                    result.error(
+                        ERROR_101,
+                        "verloop object null",
+                        "buildVerloop is not called before calling closeChat"
+                    )
+                    return
+                }
+                verloop!!.closeChat()
+                result.success(1)
+                return
+            }
+
             else -> {
                 result.notImplemented()
             }
