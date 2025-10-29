@@ -15,7 +15,7 @@ This is a wrapper over native SDK for flutter app
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency "VerloopSDKiOS", "0.2.16"
+  s.dependency "VerloopSDKiOS", "0.2.19-rc.1"
   s.platform = :ios, '12.0'
 
   # Flutter.framework does not contain a i386 slice.
