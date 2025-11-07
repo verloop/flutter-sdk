@@ -187,6 +187,15 @@ public class SwiftVerloopFlutterSdkPlugin: NSObject, FlutterPlugin, VLEventDeleg
                 self.viewController = nil // Clear the reference after dismissing
             })
             result(1)
+
+        case "logout": 
+            config?.logout()
+            result(1)
+
+        case "closeChat":
+            config?.closeChat()
+            result(1)
+
         default:
             result(FlutterMethodNotImplemented)
     }

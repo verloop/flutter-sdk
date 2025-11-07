@@ -168,4 +168,22 @@ class MethodChannelVerloopFlutterSdk extends VerloopFlutterSdkPlatform {
       log("Failed to load widget: '${e.message}'.");
     }
   }
+
+  @override
+  Future<void> logout() async {
+    try {
+      await verloopMethods.invokeMethod('logout');
+    } on PlatformException catch (e) {
+      log("Failed to logout: '${e.message}'."); 
+    }
+  }
+
+  @override
+  Future<void> closeChat() async {
+    try {
+      await verloopMethods.invokeMethod('closeChat');
+    } on PlatformException catch (e) {
+      log("Failed to close chat: '${e.message}'."); 
+    }
+  }
 }

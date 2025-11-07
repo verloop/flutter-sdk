@@ -207,4 +207,12 @@ class VerloopSdk {
   Future<void> dismissChat() async {
     return await VerloopFlutterSdkPlatform.instance.dismissChat();
   }
+
+  Future<void> logout() async {
+    return await VerloopFlutterSdkPlatform.instance.logout();
+  }
+
+  Future<void> closeChat() async {
+    return await VerloopFlutterSdkPlatform.instance.closeChat();
+  }
 }
