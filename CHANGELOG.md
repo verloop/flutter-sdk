@@ -1,3 +1,9 @@
+## 0.1.1
+
+* Upgraded Andorid sdk version
+* Upgraded iOS sdk version
+* Added missing methods logout and closeChat
+
 ## 0.1.0
 
 * Upgraded Andorid sdk version
