@@ -193,7 +193,7 @@ public class SwiftVerloopFlutterSdkPlugin: NSObject, FlutterPlugin, VLEventDeleg
             result(1)
 
         case "closeChat":
-            config?.close()
+            config?.closeChat()
             result(1)
 
         default:
