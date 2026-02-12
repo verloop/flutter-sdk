@@ -189,11 +189,13 @@ public class SwiftVerloopFlutterSdkPlugin: NSObject, FlutterPlugin, VLEventDeleg
             result(1)
 
         case "logout": 
-            config?.logout()
+            // config?.logout()
+            verloop?.logout()
             result(1)
 
         case "closeChat":
-            config?.closeChat()
+            // config?.closeChat()
+            verloop?.closeChat()
             result(1)
 
         default:
