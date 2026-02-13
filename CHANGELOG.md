@@ -1,3 +1,7 @@
+## 0.1.2-rc.1
+
+- Added correct methods for logout and closeChat
+
 ## 0.1.1
 
 * Upgraded Andorid sdk version
