@@ -1,3 +1,7 @@
+## 0.1.2-rc.2
+
+- minor bug fix
+
 ## 0.1.2-rc.1
 
 - Added correct methods for logout and closeChat
