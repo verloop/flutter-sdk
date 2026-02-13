@@ -157,6 +157,7 @@ public class SwiftVerloopFlutterSdkPlugin: NSObject, FlutterPlugin, VLEventDeleg
             }
             verloop = VerloopSDK(config: config!)
             verloop?.observeLiveChatEventsOn(vlEventDelegate: self)
+            result (1)
         case "showChat":
             if verloop == nil {
                 result(FlutterError.init(code: SwiftVerloopFlutterSdkPlugin.ERROR_101,
