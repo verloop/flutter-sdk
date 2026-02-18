@@ -1,3 +1,7 @@
+## 0.1.2
+
+- bug fix
+
 ## 0.1.2-rc.2
 
 - minor bug fix
